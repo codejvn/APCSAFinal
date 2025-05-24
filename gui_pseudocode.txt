@@ -1,0 +1,2 @@
+render the background image
+using user input, render the desired number of markers on the screen in a predetermined position (using markermanager)

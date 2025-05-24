@@ -1,0 +1,8 @@
+
+
+changes:
+Instead of a button to roll the dice, the dice will be rolled automatically after a player completes their turn.
+
+Instead of having a display for the number of money each person has, after every turn, there will be a print statement saying how much money that player has now.
+
+Instead of the markers to signify the properties that a player owns, after each turn, all properties under that person's ownership will be printed out.

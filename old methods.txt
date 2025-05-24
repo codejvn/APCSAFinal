@@ -1,0 +1,179 @@
+ public void chooseRailroad(Player p){
+    Railroad currProp = (Railroad) (board.get(p.getPos()));
+    if (currProp.getOwner() == null) {
+      if (p.getMoney() >= currProp.getCost()) {
+        System.out.println("The property " + currProp.getRailroad() + " can be aquired. Do you want to buy it? (y/n)");
+        // Scanner kb = new Scanner(System.in);
+        String anw = kb.nextLine();
+        if (anw.equals("y")) { // use try/catch to check for capitalized letters?
+          p.getProps().add(currProp);// will this work? what is this trying to do
+          p.setMoney(p.getMoney() - currProp.getCost());
+          currProp.setOwner(p);
+        }
+      } 
+      else {
+        System.out.println("Not enought money");
+      }
+    } 
+    else {
+      Player owner = currProp.getOwner();
+      Player curr = players[currPlayer];
+      int rent;
+      if (owner != curr) {
+           rent = railroads.getRent(owner);
+        if(curr.getMoney() < rent){
+          //shiver me timbers, they can't pay for rent
+          System.out.println("You currently don't have enough money to pay for rent");
+          System.out.println("In order to pay for rent, you must sell some of your assets in order to be able to pay.");
+          /**figure out how to sell
+          unless it says otherwise in the proposal, js sell for the same price you buy (sell back to the bank that is)
+          maybe create a sell method that gives money back to the user,
+          and makes the owner of the property null
+          */
+          ArrayList<Property> sellableProps = new ArrayList<Property>();
+          for(int i = 0; i<board.size(); i++) {
+            if(all.getOwner().equals(p)) {//added equals method
+              if(allProperties[i].getCost()+p.getMoney() >= currProp.getCost()){
+                sellableProps.add(allProperties[i]);
+              }
+            }
+          }
+          System.out.println("These are your availible properties that you can sell: ");
+          for(int i = 0; i < sellableProps.size(); i++){//printing out properties
+            System.out.println("Index " + i + ": " + sellableProps.get(i).getProperty());
+          }
+          System.out.println("Type the index of which property you want to sell");
+          int index = kb.nextInt();
+              sellableProps.remove(index);
+          Property sold;
+            ArrayList<Property> props = p.getProps();
+              for(int j = 0; j < props.size(); j++) {
+                if(props.get(j).getName().equals(sellableProps.get(i).getName())) {
+                  sold = props.remove(j);
+                }
+              }
+        curr.setMoney(curr.getMoney() + sold.getCost());//sells property for rent
+        }
+        curr.setMoney(curr.getMoney() - rent);
+        owner.setMoney(owner.getMoney() + rent);
+      }
+    }
+  }
+  public void chooseUtility(Player p){
+       Utility currProp = (Utility) (board.get(p.getPos()));
+    if (currProp.getOwner() == null) {
+      if (p.getMoney() >= currProp.getCost()) {
+        System.out.println("The property " + currProp.getUtility() + " can be aquired. Do you want to buy it? (y/n)");
+        // Scanner kb = new Scanner(System.in);
+        String anw = kb.nextLine();
+        if (anw.equals("y")) { // use try/catch to check for capitalized letters?
+          p.getProps().add(currProp);// will this work? what is this trying to do
+          p.setMoney(p.getMoney() - currProp.getCost());
+          currProp.setOwner(p);
+        }
+      } else {
+        System.out.println("Not enought money");
+      }
+    } else {
+      Player owner = currProp.getOwner();
+      Player curr = players[currPlayer];
+      int rent;
+      if (owner != curr) {
+          rent = utilities.getRent(owner, numRolled);
+        if(curr.getMoney() < rent){
+          //shiver me timbers, they can't pay for rent
+          System.out.println("You currently don't have enough money to pay for rent");
+          System.out.println("In order to pay for rent, you must sell some of your assets in order to be able to pay.");
+          /**figure out how to sell
+          unless it says otherwise in the proposal, js sell for the same price you buy (sell back to the bank that is)
+          maybe create a sell method that gives money back to the user,
+          and makes the owner of the property null
+          */
+          ArrayList<Property> sellableProps = new ArrayList<Property>();
+          for(int i = 0; i<board.size(); i++) {
+            if(allProperties[i].getOwner().equals(p)) {//added equals method
+              if(allProperties[i].getCost()+p.getMoney() >= currProp.getCost()){
+                sellableProps.add(allProperties[i]);
+              }
+            }
+          }
+          System.out.println("These are your availible properties that you can sell: ");
+          for(int i = 0; i < sellableProps.size(); i++){//printing out properties
+            System.out.println("Index " + i + ": " + sellableProps.get(i).getProperty());
+          }
+          System.out.println("Type the index of which property you want to sell");
+          int index = kb.nextInt();
+              sellableProps.remove(index);
+          Property sold;
+            ArrayList<Property> props = p.getProps();
+              for(int j = 0; j < props.size(); j++) {
+                if(props.get(j).getName().equals(sellableProps.get(i).getName())) {
+                  sold = props.remove(j);
+                }
+              }
+        curr.setMoney(curr.getMoney() + sold.getCost());//sells property for rent
+        }
+        curr.setMoney(curr.getMoney() - rent);
+        owner.setMoney(owner.getMoney() + rent);
+      }
+    }
+  }
+  public void chooseProperty(Player p) {
+     Property currProp = (Property) (board.get(p.getPos()));
+    if (currProp.getOwner() == null) {
+      if (p.getMoney() >= currProp.getCost()) {
+        System.out.println("The property " + currProp.getProperty() + " can be aquired. Do you want to buy it? (y/n)");
+        // Scanner kb = new Scanner(System.in);
+        String anw = kb.nextLine();
+        if (anw.equals("y")) { // use try/catch to check for capitalized letters?
+          p.getProps().add(currProp);// will this work? what is this trying to do
+          p.setMoney(p.getMoney() - currProp.getCost());
+          currProp.setOwner(p);
+        }
+      } else {
+        System.out.println("Not enought money");
+      }
+    } else {
+      Player owner = currProp.getOwner();
+      Player curr = players[currPlayer];
+      int rent = 0;
+      if (owner != curr) {
+         rent = currProp.getRent();
+        if(curr.getMoney() < rent){
+          //shiver me timbers, they can't pay for rent
+          System.out.println("You currently don't have enough money to pay for rent");
+          System.out.println("In order to pay for rent, you must sell some of your assets in order to be able to pay.");
+          /**figure out how to sell
+          unless it says otherwise in the proposal, js sell for the same price you buy (sell back to the bank that is)
+          maybe create a sell method that gives money back to the user,
+          and makes the owner of the property null
+          */
+          ArrayList<Property> sellableProps = new ArrayList<Property>();
+          for(int i = 0; i<board.size(); i++) {
+            if(allProperties[i].getOwner().equals(p)) {//added equals method
+              if(allProperties[i].getCost()+p.getMoney() >= currProp.getCost()){
+                sellableProps.add(allProperties[i]);
+              }
+            }
+          }
+          System.out.println("These are your availible properties that you can sell: ");
+          for(int i = 0; i < sellableProps.size(); i++){//printing out properties
+            System.out.println("Index " + i + ": " + sellableProps.get(i).getProperty());
+          }
+          System.out.println("Type the index of which property you want to sell");
+          int index = kb.nextInt();
+              sellableProps.remove(index);
+          Property sold;
+            ArrayList<Property> props = p.getProps();
+              for(int j = 0; j < props.size(); j++) {
+                if(props.get(j).getName().equals(sellableProps.get(i).getName())) {
+                  sold = props.remove(j);
+                }
+              }
+        curr.setMoney(curr.getMoney() + sold.getCost());//sells property for rent
+        }
+        curr.setMoney(curr.getMoney() - rent);
+        owner.setMoney(owner.getMoney() + rent);
+      }
+    }
+  }
